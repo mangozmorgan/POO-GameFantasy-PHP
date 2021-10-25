@@ -1,0 +1,171 @@
+:root {
+  --mainColor: #9b59b6;
+  --isDone: #3498db;
+  --enemyColor: #e74c3c;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.formCreate {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  border: 2px solid var(--mainColor);
+  border-radius: 5px;
+  padding: 1vw;
+}
+.messOk {
+  margin-bottom: 25vw;
+  color: white;
+  background-color: var(--isDone);
+  border-radius: 5px;
+  padding: 1vw 0.5vw;
+}
+.showPerso {
+  width: max-content;
+  margin-top: 3vw;
+  background-color: var(--mainColor);
+  color: white;
+  border-radius: 5px;
+  padding: 1vw;
+  margin-bottom: 2vw;
+}
+.special {
+  background-color: var(--mainColor);
+  color: white;
+  border-radius: 5px;
+  padding: 1vw;
+  margin-bottom: 2vw;
+}
+
+.creationOk {
+  width: max-content;
+  height: max-content;
+  margin-top: 2vw;
+}
+
+.createEnemy {
+  display: none;
+  margin-top: 2vw;
+}
+
+.enemyCome {
+  border-radius: 5px;
+  color: white;
+  background-color: var(--enemyColor);
+  margin-left: 80%;
+  padding: 1vw;
+}
+
+.enemyBlock {
+  margin-top: 2vw;
+  border-radius: 5px;
+  background-color: var(--enemyColor);
+  color: white;
+  width: max-content;
+  margin-left: 80%;
+  padding: 1vw;
+}
+
+.hide {
+  display: none;
+}
+
+.atq {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.attaqueSpan {
+  padding: 1vw;
+
+  border-radius: 5px;
+}
+.attaqueSpan {
+  padding: 1vw;
+
+  border-radius: 5px;
+}
+
+.level {
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-size: 1.8vw;
+  background-color: #f1c40f;
+  padding: 1vw;
+
+  border-radius: 5px;
+}
+.xp {
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-size: 1.8vw;
+  background-color: #2ecc71;
+  padding: 1vw;
+
+  border-radius: 5px;
+}
+.mort {
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-size: 1.8vw;
+  background-color: #c0392b;
+  padding: 1vw;
+
+  border-radius: 5px;
+}
+
+.victoire {
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+
+  background-color: var(--isDone);
+  padding: 1vw;
+
+  border-radius: 5px;
+}
+
+.bdf,
+.simpleAtq {
+  display: none;
+}
+
+/** Code Antho **/
+
+.startGame {
+  margin-top: 1em;
+  background-color: var(--isDone);
+  border: none;
+  padding: 1em 0.5em;
+  color: white;
+  box-shadow: 0px 5px #00000054;
+  border-radius: 5px;
+}
+
+.startGame:active {
+  box-shadow: 0px 2px #00000054;
+  transform: translateY(3px);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+header h2 {
+  padding-left: 10px;
+}
+
+.hero {
+  text-transform: capitalize;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+}
