@@ -13,45 +13,48 @@ class Magicien extends Perso
         $degats = 180,
         $resistance = 40
     ) {
-        parent::__construct($name, $pv = 2000, $degats = 200, $resistance = 40);
-        echo "<span class='messOk'>votre <span class='classe'> Magicien </span> 🧙 vient d'être crée </span> <br>";
+        // Correction de l'appel parent pour utiliser les variables passées
+        parent::__construct($name, $pv, $degats, $resistance);
+        echo "<div class='msg-creation'>Le <span class='classe'>Magicien</span> 🧙 <strong>$name</strong> vient d'apparaître !</div>";
         $this->_magie = 40;
-    }
-
-    public function getName()
-    {
-        parent::getNamePerso();
     }
 
     public function bouleDeFeu($enemy)
     {
-        if ($this->_magie > 0) {
-            echo "<div class='attaqueSpan'><span class='hero'>$this->_nom </span> a lancé une 🔥 (+20) sur $enemy->_nom !</div><br>";
+        echo "<div class='msg-action player-action'>";
+        
+        if ($this->_magie >= 20) {
+            $degatsFinal = $this->_atq - $enemy->_res + 20;
             $this->_magie -= 20;
-            $enemy->_vie -= $this->_atq - $enemy->_res + 20;
+            $enemy->_vie -= $degatsFinal;
+
+            echo "🔥 <span class='hero'>$this->_nom</span> incante une <strong>Boule de Feu</strong> sur $enemy->_nom ! (<strong>-$degatsFinal HP</strong>)<br>";
 
             if ($enemy->_vie <= 0) {
-                echo "<div class='mort'>$enemy->_nom a finit completement carbonisé ! </div> <br>";
-                echo "<div class='attaqueSpan'>Il reste $this->_magie MP a $this->_nom </div> <br>";
+                echo "<div class='mort'>$enemy->_nom a fini complètement carbonisé ! 🔥💀</div>";
                 $this->_xp += 50;
-                echo "<h1 class='victoire'> Vous avez vaincu $enemy->_nom !</h1>";
-                echo "<div class='xp'>$this->_nom a gagné 50 points d'expérience</div> <br>";
+                echo "<div class='victoire'>✨ VICTOIRE ! +50 XP</div>";
+                
                 if ($this->_xp >= 100) {
                     $this->_level += 1;
-                    $this->_xp = $this->_xp - 100;
-                    echo "<div class='level'>$this->_nom A gagné un niveau ! Son niveau est maintenant de $this->_level</div> <br>";
+                    $this->_xp -= 100;
+                    echo "<div class='level-up'>⭐ NIVEAU SUPÉRIEUR ! Vous êtes niveau $this->_level</div>";
                 }
             } else {
-                echo "<div class='attaqueSpan'> Il reste $enemy->_vie 💗 a $enemy->_nom <br> et il reste $this->_magie 🌀 a <span class='hero'>$this->_nom </span> </div> <br>";
+                echo "Il reste <span class='hp-count'>$enemy->_vie 💗</span> à l'ennemi et <span class='mana-count'>$this->_magie 🌀 MP</span> à $this->_nom.";
             }
         } else {
-            echo "<div class='attaqueSpan'>Attention ! <span class='hero'>$this->_nom </span> n'a plus assez de magie pour tirer des boules de feu 🔥 </div> <br>";
+            echo "<div class='warning'>⚠️ Pas assez de mana pour lancer une Boule de Feu !</div>";
         }
+        
+        echo "</div>"; // Fin du bloc action
     }
 
     public function showPerso()
     {
+        echo "<div class='player-status'>";
         parent::showPerso();
-        echo "<span class='special'><strong>Capacité speciale</strong> : Magie : $this->_magie 🌀</span><br>";
+        echo " <span class='mana-count'>🌀 Magie : $this->_magie</span>";
+        echo "</div>";
     }
 }

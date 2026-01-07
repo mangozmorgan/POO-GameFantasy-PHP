@@ -6,11 +6,6 @@ class Archer extends Perso
 {
     public $_fleches;
 
-    public function getName()
-    {
-        parent::getName();
-    }
-
     public function __construct(
         $name,
         $pv = 1200,
@@ -18,34 +13,42 @@ class Archer extends Perso
         $resistance = 60
     ) {
         parent::__construct($name, $pv, $degats, $resistance);
-        echo "<span class='messOk'>votre <span class='classe'> Archer </span>🏹 vient d'être crée </span> <br>";
+        // On entoure le message de création pour le log
+        echo "<div class='msg-creation'>L'Archer <span class='classe'>Archer</span> <strong>$name</strong> 🏹 entre dans l'arène !</div>";
         $this->_fleches = 50;
     }
 
     public function fleche($enemy)
     {
-        $enemy->_vie -= $this->_atq - $enemy->_res + 15;
+        $degatsFinal = $this->_atq - $enemy->_res + 15;
+        $enemy->_vie -= $degatsFinal;
         $this->_fleches -= 5;
+
+        echo "<div class='msg-action player-action'>";
+        echo "<strong>$this->_nom</strong> lance une <span class='special-txt'>Pluie de flèches</span> sur <strong>$enemy->_nom</strong> ! 🏹 (<strong>-$degatsFinal HP</strong>)<br>";
+        
         if ($enemy->_vie <= 0) {
-            echo "<div class='mort'>$enemy->_nom est mort sous une pluie de fleches ! </div> <br>";
-            echo "<div class='attaqueSpan'>Il reste $this->_fleches fleches a $this->_nom </div> <br>";
+            echo "<div class='mort'>$enemy->_nom s'écroule sous les flèches...</div>";
             $this->_xp += 30;
-            echo "<h1 class='victoire'> Vous avez vaincu $enemy->_nom !</h1>";
-            echo "<div class='xp'>$this->_nom a gagné 50 points d'expérience</div> <br>";
+            echo "<div class='victoire'>✨ Victoire ! $this->_nom gagne 30 XP.</div>";
+            
             if ($this->_xp >= 100) {
                 $this->_level += 1;
-                $this->_xp = $this->_xp - 100;
-                echo "<div class='level'>$this->_nom A gagné un niveau ! Son niveau est maintenant de $this->_level</div> <br>";
+                $this->_xp -= 100;
+                echo "<div class='level-up'>⭐ LEVEL UP ! Niveau $this->_level</div>";
             }
         } else {
-            echo "$this->_nom a tiré des fleches sur $enemy->_nom! 🏹<br>";
-            echo "Il reste a $enemy->_nom , $enemy->_vie 💗 <br> Il reste  $this->_fleches flèches a $this->_nom <br>";
+            echo "Il reste <span class='hp-count'>$enemy->_vie 💗</span> à l'ennemi.";
         }
+        echo "</div>"; // Fin du bloc action
     }
 
     public function showPerso()
     {
-        parent::showPerso();
-        echo "<span class='special'><strong>Capacité speciale</strong> : Fleches : $this->_fleches 🏹</span><br>";
+        // On crée un petit badge de statut pour le joueur
+        echo "<div class='player-status'>";
+        parent::showPerso(); // Affiche Nom, PV, etc.
+        echo " <span class='ammo-count'>🏹 Munitions : $this->_fleches</span>";
+        echo "</div>";
     }
 }

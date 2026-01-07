@@ -27,39 +27,52 @@ class Perso
         $this->_level = $level;
     }
 
-    public function getNamePerso()
-    {
-        echo $this->_nom;
-    }
-
     public function attaque($enemy)
     {
-        $enemy->_vie -= $this->_atq - $enemy->_res;
-        echo "⚔ <span class='hero'>$this->_nom </span> attaque $enemy->_nom ⚔ <br>";
+        $degatsBase = $this->_atq - $enemy->_res;
+        // On s'assure de ne pas infliger des dégâts négatifs si la rés est trop haute
+        $degatsFinal = ($degatsBase > 0) ? $degatsBase : 10; 
+        
+        $enemy->_vie -= $degatsFinal;
+
+        echo "<div class='msg-action player-action'>";
+        echo "⚔️ <span class='hero'>$this->_nom</span> assène un coup à <strong>$enemy->_nom</strong> (<strong>-$degatsFinal HP</strong>)";
+
         if ($enemy->_vie <= 0) {
-            echo "<div class='mort'>$enemy->_nom est mort lachement ! </div> <br>";
-            echo "<div class='attaqueSpan'>Il reste $this->_magie MP a <span class='hero'>$this->_nom </span> </div> <br>";
+            echo "<div class='mort'>$enemy->_nom s'effondre lâchement ! 💀</div>";
             $this->_xp += 50;
-            echo "<h1 class='victoire'> Vous avez vaincu $enemy->_nom !</h1>";
-            echo "<div class='xp'><span class='hero'>$this->_nom </span> a gagné 50 points d'expérience</div> <br>";
+            echo "<div class='victoire'>✨ VICTOIRE ! +50 XP</div>";
+            
             if ($this->_xp >= 100) {
                 $this->_level += 1;
-                $this->_xp = $this->_xp - 100;
-                echo "<div class='level'><span class='hero'>$this->_nom </span> A gagné un niveau ! Son niveau est maintenant de $this->_level</div> <br>";
+                $this->_xp -= 100;
+                echo "<div class='level-up'>⭐ LEVEL UP ! Vous passez niveau $this->_level</div>";
             }
         } else {
-            echo "Apres l'attaque 🤺 de <span class='hero'>$this->_nom </span> , $enemy->_nom a $enemy->_vie 💗 <br>";
+            echo "<div class='hp-status'>Il reste <span class='hp-count'>$enemy->_vie 💗</span> à l'ennemi.</div>";
         }
+        echo "</div>";
     }
 
     public function showPerso()
     {
-        echo "<div  class='showPerso'><span><strong>Nom : </strong><div class='nom'>$this->_nom</div> </span> <br><span><strong>PV :</strong> $this->_vie 💗</span><br><span> <strong>points d'attaque :</strong> $this->_atq 🔪</span> <br><span><strong> Resistance : </strong>$this->_res 🛡️</span> <br><span><strong> XP : </strong>$this->_xp </span> <br><span><strong> Niveaux : </strong>$this->_level </span> <br> </div>";
+        // On affiche les stats sous forme de mini-tableau de bord
+        echo "<div class='showPerso'>";
+        echo "  <div class='perso-header'><span class='nom'>$this->_nom</span> <span class='level-badge'>LVL $this->_level</span></div>";
+        echo "  <div class='stats-grid'>";
+        echo "    <span>❤️ $this->_vie</span>";
+        echo "    <span>⚔️ $this->_atq</span>";
+        echo "    <span>🛡️ $this->_res</span>";
+        echo "    <span>✨ $this->_xp XP</span>";
+        echo "  </div>";
+        echo "</div>";
     }
+
     public function showEnemy()
     {
-        echo "<div  class='enemyBlock'><span><strong>le nom : </strong>$this->_nom </span> <br><span><strong>PV :</strong> $this->_vie 💗</span><br><span> <strong>points d'attaque :</strong> $this->_atq 🔪</span> <br><span><strong> Resistance : </strong>$this->_res 🛡️</span> <br> </div>";
+        echo "<div class='enemyBlock'>";
+        echo "  <span class='enemy-name'>😈 $this->_nom</span>";
+        echo "  <div class='enemy-hp'>PV: <strong>$this->_vie</strong> 💗</div>";
+        echo "</div>";
     }
 }
-
-?>

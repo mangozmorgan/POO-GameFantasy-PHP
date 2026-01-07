@@ -11,7 +11,7 @@ include './classes/enemy/Gobelin.php';
 use Classes\Personnages\Magicien;
 use Classes\Enemy\Troll;
 use Classes\Enemy\Gobelin;
-use Classes\Archer;
+use Classes\Personnages\Archer;
 
 $name = $_POST['nomPerso'];
 
